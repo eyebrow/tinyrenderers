@@ -17,8 +17,8 @@ VSOutput VSMain(float4 Position : POSITION, float2 TexCoord : TEXCOORD0)
 	return result;
 }
 
-Texture2D uTex0 : register(t1);
-SamplerState uSampler0 : register(s2);
+Texture2D uTex0 : register(t1, space1);
+SamplerState uSampler0 : register(s2, space3);
 
 float4 PSMain(VSOutput input) : SV_TARGET
 {

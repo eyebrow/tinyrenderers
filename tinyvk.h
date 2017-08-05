@@ -253,6 +253,7 @@ typedef enum tr_descriptor_type {
     tr_descriptor_type_storage_texel_buffer_uav, // UAV | VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER
     tr_descriptor_type_texture_srv,              // SRV | VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE
     tr_descriptor_type_texture_uav,              // UAV | VK_DESCRIPTOR_TYPE_STORAGE_IMAGE
+    tr_descriptor_type_combined_image_sampler,
 } tr_descriptor_type;
 
 typedef enum tr_sample_count {
@@ -3575,6 +3576,7 @@ void tr_internal_vk_create_descriptor_set(tr_renderer* p_renderer, tr_descriptor
             case tr_descriptor_type_storage_texel_buffer_uav : type_index = VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER; break;
             case tr_descriptor_type_texture_srv              : type_index = VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE; break;
             case tr_descriptor_type_texture_uav              : type_index = VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE; break;
+            case tr_descriptor_type_combined_image_sampler   : type_index = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER; break;
         }
         if (UINT32_MAX != type_index) {
             binding->binding            = descriptor->binding;
@@ -4642,6 +4644,12 @@ void tr_internal_vk_update_descriptor_set(tr_renderer* p_renderer, tr_descriptor
                 ++write_count;
             }
             break;
+
+            case tr_descriptor_type_combined_image_sampler: {
+                image_view_count += descriptor->count;
+                ++write_count;
+            }
+            break;
         }
     }
     // Bail if there's nothing to write
@@ -4787,6 +4795,19 @@ void tr_internal_vk_update_descriptor_set(tr_renderer* p_renderer, tr_descriptor
             }
             break;
 
+            case tr_descriptor_type_combined_image_sampler: {
+                assert(NULL != descriptor->textures);
+
+                writes[write_index].descriptorType = VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE;
+                writes[write_index].pImageInfo = &(image_views[texture_view_index]);
+                for (uint32_t i = 0; i < descriptor->count; ++i) {
+                    memcpy(&(image_views[texture_view_index]), 
+                           &(descriptor->textures[i]->vk_texture_view),
+                           sizeof(descriptor->textures[i]->vk_texture_view));
+                    ++texture_view_index;
+                }
+            }
+            break;
         }
 
         ++write_index;

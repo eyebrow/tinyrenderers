@@ -122,10 +122,7 @@ void init_tiny_renderer(GLFWwindow* window)
 {
     std::vector<const char*> instance_layers = {
 #if defined(_DEBUG)
-        "VK_LAYER_LUNARG_api_dump",
-        "VK_LAYER_LUNARG_core_validation",
-        "VK_LAYER_LUNARG_swapchain",
-        "VK_LAYER_LUNARG_parameter_validation"
+        "VK_LAYER_LUNARG_standard_validation",
 #endif
     };
 
@@ -176,6 +173,7 @@ void init_tiny_renderer(GLFWwindow* window)
                              hlsl.size(), hlsl.data(), "PSMain", &m_shader);
 #endif
 
+    /*
     std::vector<tr_descriptor> descriptors(2);
     descriptors[0].type          = tr_descriptor_type_texture_srv;
     descriptors[0].count         = 1;
@@ -185,6 +183,14 @@ void init_tiny_renderer(GLFWwindow* window)
     descriptors[1].count         = 1;
     descriptors[1].binding       = 1;
     descriptors[1].shader_stages = tr_shader_stage_frag;
+    tr_create_descriptor_set(m_renderer, descriptors.size(), descriptors.data(), &m_desc_set);
+    */
+
+    std::vector<tr_descriptor> descriptors(1);
+    descriptors[0].type          = tr_descriptor_type_combined_image_sampler;
+    descriptors[0].count         = 1;
+    descriptors[0].binding       = 0;
+    descriptors[0].shader_stages = tr_shader_stage_frag;
     tr_create_descriptor_set(m_renderer, descriptors.size(), descriptors.data(), &m_desc_set);
 
     tr_vertex_layout vertex_layout = {};
@@ -233,10 +239,14 @@ void init_tiny_renderer(GLFWwindow* window)
     tr_util_update_texture_uint8(m_renderer->graphics_queue, image_width, image_height, image_row_stride, image_data, image_channels, m_texture, NULL, NULL);
     lc_free_image(image_data);
 
-    tr_create_sampler(m_renderer, &m_sampler);
+    //tr_create_sampler(m_renderer, &m_sampler);
 
+    /*
     m_desc_set->descriptors[0].textures[0] = m_texture;
     m_desc_set->descriptors[1].samplers[0] = m_sampler;
+    */
+    m_desc_set->descriptors[0].textures[0] = m_texture;
+    //m_desc_set->descriptors[0].samplers[0] = m_sampler;
     tr_update_descriptor_set(m_renderer, m_desc_set);
 }
 
