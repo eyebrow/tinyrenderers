@@ -31,12 +31,12 @@ float4 PSMain(VSOutput input)
 /* Build Results */
 /*
 
-FXC: FAILED:VS, FAILED:PS
+FXC: VS:FAILED, PS:FAILED
   901_nested_structs.hlsl(4,10-14): error X3000: syntax error: unexpected token 'Inner'
 
 DXC:
 
-GLSLANG: FAILED:VS, FAILED:PS
+GLSLANG: VS:FAILED, PS:FAILED
   ERROR: 901_nested_structs.hlsl:6: 'member name' : Expected
   ERROR: 901_nested_structs.hlsl:6: 'struct member declarations' : Expected
   901_nested_structs.hlsl(6): error at column 4, HLSL parsing failed.

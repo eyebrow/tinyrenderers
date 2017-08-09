@@ -21,7 +21,11 @@ GenericTex CreateGeneric(Texture2D tex)
 GenericTex CreateGeneric(Texture2DArray texArray)
 {
   GenericTex ret;
+<<<<<<< HEAD
   ret.texArray = texArray;
+=======
+  ret.tex = texArray;
+>>>>>>> 78b8a798dd44efb02987974c573621827fa44ca6
   ret.which = 1;
   return ret;
 }
