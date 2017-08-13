@@ -2,10 +2,7 @@
 
 // Vertex Shader
 struct VSInput {
-  // SV_POSITION doesn't have a system value for vertex input
-  float4 position : SV_Position;
-  uint   sv_vid   : SV_VertexID;
-  uint   sv_iid   : SV_InstanceID;
+  float4 position : POSITION;
 };
 
 struct VSOutput {

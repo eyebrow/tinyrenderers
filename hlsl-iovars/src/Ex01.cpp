@@ -122,10 +122,7 @@ void init_tiny_renderer(GLFWwindow* window)
 {
     std::vector<const char*> instance_layers = {
 #if defined(_DEBUG)
-        "VK_LAYER_LUNARG_api_dump",
-        "VK_LAYER_LUNARG_core_validation",
-        "VK_LAYER_LUNARG_swapchain",
-        "VK_LAYER_LUNARG_parameter_validation"
+        "VK_LAYER_LUNARG_standard_validation",
 #endif
     };
 
@@ -164,11 +161,11 @@ void init_tiny_renderer(GLFWwindow* window)
     
 #if defined(TINY_RENDERER_VK)
     // Uses HLSL source
-    auto vert = load_file(kAssetDir + "texture.vs.spv");
-    auto frag = load_file(kAssetDir + "texture.ps.spv");
+    auto vert = load_file(kAssetDir + "Ex01.vs.spv");
+    auto frag = load_file(kAssetDir + "Ex01.ps.spv");
     tr_create_shader_program(m_renderer, 
-                             vert.size(), (uint32_t*)(vert.data()), "VSMain", 
-                             frag.size(), (uint32_t*)(frag.data()), "PSMain", &m_shader);
+                             vert.size(), (uint32_t*)(vert.data()), "main", 
+                             frag.size(), (uint32_t*)(frag.data()), "main", &m_shader);
 #elif defined(TINY_RENDERER_DX)
     auto vs_hlsl = load_file(kAssetDir + "Ex01.vs.hlsl");
     auto ps_hlsl = load_file(kAssetDir + "Ex01.ps.hlsl");

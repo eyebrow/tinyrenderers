@@ -161,14 +161,14 @@ void init_tiny_renderer(GLFWwindow* window)
     
 #if defined(TINY_RENDERER_VK)
 	// Uses HLSL source
-	auto vert = load_file(kAssetDir + "Ex02.vs.spv");
-	auto frag = load_file(kAssetDir + "Ex02.ps.spv");
+	auto vert = load_file(kAssetDir + "Ex06.vs.spv");
+	auto frag = load_file(kAssetDir + "Ex06.ps.spv");
 	tr_create_shader_program(m_renderer,
 		vert.size(), (uint32_t*)(vert.data()), "main",
 		frag.size(), (uint32_t*)(frag.data()), "main", &m_shader);
 #elif defined(TINY_RENDERER_DX)
-    auto vs_hlsl = load_file(kAssetDir + "Ex02.vs.hlsl");
-    auto ps_hlsl = load_file(kAssetDir + "Ex02.ps.hlsl");
+    auto vs_hlsl = load_file(kAssetDir + "Ex06.vs.hlsl");
+    auto ps_hlsl = load_file(kAssetDir + "Ex06.ps.hlsl");
     tr_create_shader_program(m_renderer, 
                              vs_hlsl.size(), vs_hlsl.data(), "main", 
                              ps_hlsl.size(), ps_hlsl.data(), "main", &m_shader);

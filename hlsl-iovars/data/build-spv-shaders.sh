@@ -209,6 +209,8 @@ compile_vs Ex04.vs.hlsl main
 compile_ps Ex04.ps.hlsl main
 compile_vs Ex05.vs.hlsl main
 compile_ps Ex05.ps.hlsl main
+compile_vs Ex06.vs.hlsl main
+compile_ps Ex06.ps.hlsl main
 compile_vs Sv01.vs.hlsl main
 compile_ps Sv01.ps.hlsl main
 
